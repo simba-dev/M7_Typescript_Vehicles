@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Typescript Vehicles</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous" />
+</head>
+
+<body class="bg-light">
+  <main>
+    <div class="container">
+      <div class="py-5 text-center">
+        <img class="d-block mx-auto mb-4" src="https://dbdzm869oupei.cloudfront.net/img/sticker/preview/24811.png"
+          alt="" height="57" />
+        <h2>Exercici Vehicles</h2>
+      </div>
+      <div class="container">
+
+
+        <form id="form-car">
+          <div class="row">
+            <div class="col-12 col-md-4 mb-3">
+              <label for="carPlate" class="form-label">Matrícula</label>
+              <input type="text" class="form-control" id="carPlate" />
+              <div id="plateHelp" class="form-text">Format d'introducció: 1234ABC</div>
+              <div class="invalid-feedback" id="errorPlate"></div>
+            </div>
+            <div class="col-12 col-md-4 mb-3">
+              <label for="carModel" class="form-label">Model del cotxe</label>
+              <input type="text" class="form-control" id="carModel" />
+            </div>
+            <div class="col-12 col-md-4 mb-3">
+              <label for="carColor" class="form-label">Color del cotxe</label>
+              <input type="text" class="form-control" id="carColor" />
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary">
+            Crear cotxe
+          </button>
+        </form>
+
+
+        <form id="form-wheels" hidden=true>
+            <script>
+              var html = "";
+              html += "<div class=\"row\">"
+              for (var i = 1; i <= 4; i++) {
+                html += "<div class=\"col-12 col-sm-6 col-md-3 mb-3\">";
+                html += "<label for=\"rodaModel" + i + "\" class=\"form-label\">";
+                html += "Marca Roda " + i + "</label>";
+                html += "<input type=\"text\" class=\"form-control\" id=\"rodaModel" + i + "\" />"
+                html += "</div>";
+
+                html += "<div class=\"col-12 col-sm-6 col-md-3 mb-3\">";
+                html += "<label for=\"rodaDiametre" + i + "\" class=\"form-label\">";
+                html += "Diàmetre Roda " + i + "</label>";
+                html += "<input type=\"text\" class=\"form-control\" id=\"rodaDiametre" + i + "\" />"
+                html += "<div class=\"invalid-feedback\" id=\"errorDiametre" + i + "\"></div>"
+                html += "</div>";
+              }
+              html += "</div>"
+              document.getElementById('form-wheels').innerHTML = html;
+            </script>
+          <button type="submit" class="btn btn-primary">
+            Afegir Rodes
+          </button>
+        </form>
+      </div>
+
+
+      <div class="container" id="container-car" hidden=true>
+        <div class="row">
+          <div class="col-12 col-md-4 mb-3 ">
+            <div class="card">
+              <div class="card-body">
+
+                <h5 class="card-title">Matrícula</h5>
+                <p id="carPlateAdded"></p>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-4 mb-3">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Model</h5>
+                <p id="carModelAdded"></p>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-4 mb-3">
+            <div class="card">
+              <div class="card-body">
+
+                <h5 class="card-title">Color</h5>
+                <p id="carColorAdded"></p>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+<div class="container" id="container-wheels" hidden=true>
+  
+  <script>
+    var html = "";
+    html += "<div class=\"row\">"
+    for (var i = 1; i <= 4; i++) {
+      html += "<div class=\"col-12 col-sm-6 col-md-3 mb-3\">";
+      html += "<div class=\"card\"> ";
+      html += "<div class=\"card-body\"> ";
+      html += "<h5 class=\"card-title\">Marca de Roda "+ i +"</h5> ";
+      html += "<p id=\"rodaModelAdded" + i + "\"></p>";
+      html += "</div></div></div>";
+      html += "<div class=\"col-12 col-sm-6 col-md-3 mb-3\">";
+      html += "<div class=\"card\"> ";
+      html += "<div class=\"card-body\"> ";
+      html += "<h5 class=\"card-title\">Diàmetre de Roda "+ i +"</h5> ";
+      html += "<p id=\"rodaDiametreAdded" + i + "\"></p>";
+      html += "</div></div></div>";
+    }
+    html += "</div>"
+    document.getElementById('container-wheels').innerHTML = html;
+  </script>
+
+</div>
+
+
+</div>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
+<script src="../models/car.js"></script>
+<script src="../models/wheel.js"></script>
+<script src="../controllers/controller.js"></script>
+</body>
+
+</html>

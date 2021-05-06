@@ -1,4 +1,6 @@
-let car: Car;
+let car: Car[] = new Array();
+var j = 0;
+
 function createCar() {
   let plate: string = (<HTMLInputElement>document.getElementById("carPlate")).value;
   let color: string = (<HTMLInputElement>document.getElementById("carColor")).value;
@@ -6,10 +8,10 @@ function createCar() {
 
 
 
-  car = new Car(plate, color, brand);
-  document.getElementById("carPlateAdded")!.innerText = car.plate;
-  document.getElementById("carModelAdded")!.innerText = car.brand;
-  document.getElementById("carColorAdded")!.innerText = car.color;
+  car[j] = new Car(plate, color, brand);
+  document.getElementById("carPlateAdded")!.innerText +=   car[j].plate + "\n";
+  document.getElementById("carModelAdded")!.innerText +=  car[j].brand + "\n";
+  document.getElementById("carColorAdded")!.innerText +=  car[j].color + "\n";
   // + " WHEELS: " + JSON.stringify(car.wheels);
 
 }
@@ -20,12 +22,12 @@ function addCarWheels() {
   for (let i = 0; i < 4; i++) {
     rodaModel[i] = (<HTMLInputElement>document.getElementById("rodaModel" + (i + 1))).value;
     rodaDiametre[i] = +(<HTMLInputElement>document.getElementById("rodaDiametre" + (i + 1))).value;
-    car.addWheel(new Wheel(rodaDiametre[i], rodaModel[i]));
+    car[j].addWheel(new Wheel(rodaDiametre[i], rodaModel[i]));
   }
 
   for (let i = 1; i <= 4; i++) {
-    (<HTMLInputElement>document.getElementById("rodaModelAdded" + i)).innerText = car.wheels[i - 1].brand;
-    (<HTMLInputElement>document.getElementById("rodaDiametreAdded" + i)).innerText = String(car.wheels[i - 1].diameter);
+    (<HTMLInputElement>document.getElementById("rodaModelAdded" + i)).innerText += car[j].wheels[i - 1].brand+ "\n";
+    (<HTMLInputElement>document.getElementById("rodaDiametreAdded" + i)).innerText +=  String(car[j].wheels[i - 1].diameter)+ "\n";
   }
 }
 
@@ -39,6 +41,7 @@ f.addEventListener('submit', (e: Event) => {
     (<HTMLFormElement>document.getElementById("form-car")).hidden = true;
     (<HTMLFormElement>document.getElementById("container-car")).hidden = false;
     (<HTMLFormElement>document.getElementById("form-wheels")).hidden = false;
+
     return false;
   } else
     return false;
@@ -52,6 +55,9 @@ f2.addEventListener('submit', (e: Event) => {
   if (validateDiametre()) {
     addCarWheels();
     (<HTMLFormElement>document.getElementById("container-wheels")).hidden = false;
+    (<HTMLFormElement>document.getElementById("form-car")).hidden = false;
+    (<HTMLFormElement>document.getElementById("form-wheels")).hidden = true;
+    j++;
     return false;
   } else {
     return false;
@@ -102,11 +108,11 @@ function validateDiametre() {
     diametre = +diametreInput.value;
     if (isNaN(diametre)) {
       acumError++;
-      (<HTMLInputElement>document.getElementById("errorDiametre"+ (i+1))).textContent = "El diàmetre d'aquesta roda no és un nombre.";
+      (<HTMLInputElement>document.getElementById("errorDiametre" + (i + 1))).textContent = "El diàmetre d'aquesta roda no és un nombre.";
       diametreInput.classList.add("is-invalid");
     } else if (!(diametre >= 0.4 && diametre <= 2)) {
       acumError++;
-      (<HTMLInputElement>document.getElementById("errorDiametre"+ (i+1))).textContent = "El diàmetre d'aquesta roda no està entre 0,4 i 2.";
+      (<HTMLInputElement>document.getElementById("errorDiametre" + (i + 1))).textContent = "El diàmetre d'aquesta roda no està entre 0,4 i 2.";
       diametreInput.classList.add("is-invalid");
     }
   }

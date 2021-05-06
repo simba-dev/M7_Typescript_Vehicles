@@ -1,13 +1,14 @@
 "use strict";
-var car;
+var car = new Array();
+var j = 0;
 function createCar() {
     var plate = document.getElementById("carPlate").value;
     var color = document.getElementById("carColor").value;
     var brand = document.getElementById("carModel").value;
-    car = new Car(plate, color, brand);
-    document.getElementById("carPlateAdded").innerText = car.plate;
-    document.getElementById("carModelAdded").innerText = car.brand;
-    document.getElementById("carColorAdded").innerText = car.color;
+    car[j] = new Car(plate, color, brand);
+    document.getElementById("carPlateAdded").innerText += car[j].plate + "\n";
+    document.getElementById("carModelAdded").innerText += car[j].brand + "\n";
+    document.getElementById("carColorAdded").innerText += car[j].color + "\n";
     // + " WHEELS: " + JSON.stringify(car.wheels);
 }
 function addCarWheels() {
@@ -16,11 +17,11 @@ function addCarWheels() {
     for (var i = 0; i < 4; i++) {
         rodaModel[i] = document.getElementById("rodaModel" + (i + 1)).value;
         rodaDiametre[i] = +document.getElementById("rodaDiametre" + (i + 1)).value;
-        car.addWheel(new Wheel(rodaDiametre[i], rodaModel[i]));
+        car[j].addWheel(new Wheel(rodaDiametre[i], rodaModel[i]));
     }
     for (var i = 1; i <= 4; i++) {
-        document.getElementById("rodaModelAdded" + i).innerText = car.wheels[i - 1].brand;
-        document.getElementById("rodaDiametreAdded" + i).innerText = String(car.wheels[i - 1].diameter);
+        document.getElementById("rodaModelAdded" + i).innerText += car[j].wheels[i - 1].brand + "\n";
+        document.getElementById("rodaDiametreAdded" + i).innerText += String(car[j].wheels[i - 1].diameter) + "\n";
     }
 }
 var f = document.getElementById("form-car");
@@ -42,6 +43,9 @@ f2.addEventListener('submit', function (e) {
     if (validateDiametre()) {
         addCarWheels();
         document.getElementById("container-wheels").hidden = false;
+        document.getElementById("form-car").hidden = false;
+        document.getElementById("form-wheels").hidden = true;
+        j++;
         return false;
     }
     else {

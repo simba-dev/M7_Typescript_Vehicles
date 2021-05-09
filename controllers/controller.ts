@@ -1,45 +1,17 @@
 let car: Car[] = new Array();
 var j = 0;
 
-function createCar() {
-  let plate: string = (<HTMLInputElement>document.getElementById("carPlate")).value;
-  let color: string = (<HTMLInputElement>document.getElementById("carColor")).value;
-  let brand: string = (<HTMLInputElement>document.getElementById("carModel")).value;
-
-
-
-  car[j] = new Car(plate, color, brand);
-  document.getElementById("carPlateAdded")!.innerText +=   car[j].plate + "\n";
-  document.getElementById("carModelAdded")!.innerText +=  car[j].brand + "\n";
-  document.getElementById("carColorAdded")!.innerText +=  car[j].color + "\n";
-  // + " WHEELS: " + JSON.stringify(car.wheels);
-
-}
-
-function addCarWheels() {
-  let rodaModel: string[] = new Array();
-  let rodaDiametre: number[] = new Array();
-  for (let i = 0; i < 4; i++) {
-    rodaModel[i] = (<HTMLInputElement>document.getElementById("rodaModel" + (i + 1))).value;
-    rodaDiametre[i] = +(<HTMLInputElement>document.getElementById("rodaDiametre" + (i + 1))).value;
-    car[j].addWheel(new Wheel(rodaDiametre[i], rodaModel[i]));
-  }
-
-  for (let i = 1; i <= 4; i++) {
-    (<HTMLInputElement>document.getElementById("rodaModelAdded" + i)).innerText += car[j].wheels[i - 1].brand+ "\n";
-    (<HTMLInputElement>document.getElementById("rodaDiametreAdded" + i)).innerText +=  String(car[j].wheels[i - 1].diameter)+ "\n";
-  }
-}
-
 
 let f = document.getElementById("form-car") as HTMLFormElement;
 f.addEventListener('submit', (e: Event) => {
 
   e.preventDefault();
-  if (validatePlate()) {
+  if (validatePlate()&&validateModel()) {
     createCar();
+
+    showCar();
     (<HTMLFormElement>document.getElementById("form-car")).hidden = true;
-    (<HTMLFormElement>document.getElementById("container-car")).hidden = false;
+    // (<HTMLFormElement>document.getElementById("container-car")).hidden = false;
     (<HTMLFormElement>document.getElementById("form-wheels")).hidden = false;
 
     return false;
@@ -54,7 +26,8 @@ f2.addEventListener('submit', (e: Event) => {
   e.preventDefault();
   if (validateDiametre()) {
     addCarWheels();
-    (<HTMLFormElement>document.getElementById("container-wheels")).hidden = false;
+    showWheels();
+    // (<HTMLFormElement>document.getElementById("container-wheels")).hidden = false;
     (<HTMLFormElement>document.getElementById("form-car")).hidden = false;
     (<HTMLFormElement>document.getElementById("form-wheels")).hidden = true;
     j++;
@@ -63,6 +36,85 @@ f2.addEventListener('submit', (e: Event) => {
     return false;
   }
 })
+
+
+function createCar() {
+  let plate: string = (<HTMLInputElement>document.getElementById("carPlate")).value;
+  let color: string = (<HTMLInputElement>document.getElementById("carColor")).value;
+  let brand: string = (<HTMLInputElement>document.getElementById("carModel")).value;
+  car[j] = new Car(plate, color, brand);
+}
+function showCar(){
+  var divContainerShow = "<div class=\"container\" id=\"container-show-" + j + "\"></div>";
+  (<HTMLDivElement>document.getElementById('container-show')).innerHTML += divContainerShow; 
+  var divContainerCar = "<div class=\"container\" id=\"container-car-" + j + "\"></div>";
+  (<HTMLDivElement>document.getElementById('container-show-' + j)).innerHTML += divContainerCar; 
+  var html = "<h3> Cotxe " + (j+1) + "</h3>" ;
+    html += "<div class=\"row\">"
+        html += "<div class=\"col-12 col-md-4 mb-3\">";
+      html += "<div class=\"card\"> ";
+      html += "<div class=\"card-body\"> ";
+      html += "<h5 class=\"card-title\">Matrícula</h5> ";
+      html += "<p id=\"carPlateAdded"+j+"\"></p>";
+      html += "</div></div></div>";
+      html += "<div class=\"col-12 col-md-4 mb-3\">";
+      html += "<div class=\"card\"> ";
+      html += "<div class=\"card-body\"> ";
+      html += "<h5 class=\"card-title\">Marca</h5> ";
+      html += "<p id=\"carModelAdded"+j+"\"></p>";
+      html += "</div></div></div>";
+      html += "<div class=\"col-12 col-md-4 mb-3\">";
+      html += "<div class=\"card\"> ";
+      html += "<div class=\"card-body\"> ";
+      html += "<h5 class=\"card-title\">Color</h5> ";
+      html += "<p id=\"carColorAdded"+j+"\"></p>";
+      html += "</div></div></div>";
+    html += "</div>";
+    (<HTMLDivElement>document.getElementById('container-car-'+j)).innerHTML += html; 
+  document.getElementById("carPlateAdded"+j)!.innerText +=   car[j].plate + "\n";
+  document.getElementById("carModelAdded"+j)!.innerText +=  car[j].brand + "\n";
+  document.getElementById("carColorAdded"+j)!.innerText +=  car[j].color + "\n";
+  // + " WHEELS: " + JSON.stringify(car.wheels);
+}
+
+function addCarWheels() {
+  let rodaModel: string[] = new Array();
+  let rodaDiametre: number[] = new Array();
+  for (let i = 0; i < 4; i++) {
+    rodaModel[i] = (<HTMLInputElement>document.getElementById("rodaModel" + (i + 1))).value;
+    rodaDiametre[i] = +(<HTMLInputElement>document.getElementById("rodaDiametre" + (i + 1))).value;
+    car[j].addWheel(new Wheel(rodaDiametre[i], rodaModel[i]));
+  } 
+}
+
+function showWheels() {
+  var html = "";
+  var divContainerWheels = "<div class=\"container\" id=\"container-wheels-" + j +"\"></div>";
+  (<HTMLDivElement>document.getElementById('container-show-' + j)).innerHTML += divContainerWheels; 
+    html += "<div class=\"row\" id=\"container-wheels2-" + j +"\">";
+    (<HTMLDivElement>document.getElementById('container-wheels-' + j)).innerHTML += html; 
+    for (var i = 1; i <= 4; i++) {
+      html = "<div class=\"col-12 col-sm-6 col-md-3 mb-3\">";
+      html += "<div class=\"card\"> ";
+      html += "<div class=\"card-body\"> ";
+      html += "<h5 class=\"card-title\">Marca de Roda "+ i +"</h5> ";
+      html += "<p id=\"rodaModelAdded" + j + "-" + i + "\"></p>";
+      html += "</div></div></div>";
+      html += "<div class=\"col-12 col-sm-6 col-md-3 mb-3\">";
+      html += "<div class=\"card\"> ";
+      html += "<div class=\"card-body\"> ";
+      html += "<h5 class=\"card-title\">Diàmetre de Roda "+ i +"</h5> ";
+      html += "<p id=\"rodaDiametreAdded" + j + "-" + i + "\"></p>";
+      html += "</div></div></div>";
+      (<HTMLDivElement>document.getElementById('container-wheels2-' + j)).innerHTML += html; 
+      (<HTMLInputElement>document.getElementById("rodaModelAdded" + j + "-" + (i))).innerText += car[j].wheels[i-1].brand;
+      (<HTMLInputElement>document.getElementById("rodaDiametreAdded" + j + "-" + (i))).innerText +=  String(car[j].wheels[i-1].diameter);
+    }
+    html = "</div>";
+    (<HTMLDivElement>document.getElementById('container-wheels-' + j)).innerHTML += html;   
+}
+
+
 
 
 const formCar = <HTMLFormElement>document.getElementById('form-car');
@@ -84,7 +136,6 @@ function validatePlate() {
     acumError++;
   } else if (plateLetter != plateLetter.toUpperCase()) {
     acumError++;
-    console.log("hola");
     cause = "Les lletres han de ésser majúscules."
   }
   if (acumError > 0) {
@@ -119,7 +170,21 @@ function validateDiametre() {
   if (acumError > 0) {
     return false;
   } else {
+    formWheels.classList.remove('is-invalid');
     return true;
   }
 
 }
+
+function validateModel() {
+  formCar.classList.remove('is-invalid');
+  var inputModel = (<HTMLInputElement>document.getElementById("carModel"));
+  if(inputModel.value.length==0){
+    inputModel.classList.add("is-invalid");
+    return false;
+  }else{
+    formCar.classList.remove("is-invalid");
+    return true;
+  }
+}
+

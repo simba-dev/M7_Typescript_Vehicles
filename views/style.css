@@ -1,3 +1,20 @@
 .container{
     padding: 20px;
+    margin: 10px;
+
 }
+.container-form{
+    margin: 20px;
+    padding: 20px;
+    background-color: lightblue;
+    border-radius: 10px;
+}
+.container-show{
+    margin: 20px;
+    padding: 20px;
+    background-color: rgb(219, 228, 231);
+    border-radius: 10px;
+}
+
+
+

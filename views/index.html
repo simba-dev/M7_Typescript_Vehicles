@@ -19,24 +19,26 @@
           alt="" height="57" />
         <h2>Exercici Vehicles</h2>
       </div>
-      <div class="container">
+      <div class="container-form">
 
 
         <form id="form-car">
           <div class="row">
             <div class="col-12 col-md-4 mb-3">
               <label for="carPlate" class="form-label">Matrícula</label>
-              <input type="text" class="form-control" id="carPlate" />
+              <input type="text" class="form-control" id="carPlate"/>
               <div id="plateHelp" class="form-text">Format d'introducció: 1234ABC</div>
               <div class="invalid-feedback" id="errorPlate"></div>
             </div>
             <div class="col-12 col-md-4 mb-3">
               <label for="carModel" class="form-label">Model del cotxe</label>
               <input type="text" class="form-control" id="carModel" />
+              <div class="invalid-feedback" id="errorModel"></div>
             </div>
             <div class="col-12 col-md-4 mb-3">
               <label for="carColor" class="form-label">Color del cotxe</label>
               <input type="text" class="form-control" id="carColor" />
+              <div class="invalid-feedback" id="errorColor"></div>
             </div>
           </div>
           <button type="submit" class="btn btn-primary">
@@ -71,9 +73,10 @@
           </button>
         </form>
       </div>
+      <div class="container-show" id="container-show">
 
-
-      <div class="container" id="container-car" hidden=true>
+      </div>
+      <!-- <div class="container" id="container-car" hidden=true>
         <div class="row">
           <div class="col-12 col-md-4 mb-3 ">
             <div class="card">
@@ -123,14 +126,14 @@
       html += "<p id=\"rodaDiametreAdded" + i + "\"></p>";
       html += "</div></div></div>";
     }
-    html += "</div>"
+    html += "</div>";
     document.getElementById('container-wheels').innerHTML = html;
   </script>
 
 </div>
 
 
-</div>
+</div> -->
 </main>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
   integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>

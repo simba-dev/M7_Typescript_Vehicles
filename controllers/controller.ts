@@ -6,7 +6,9 @@ let f = document.getElementById("form-car") as HTMLFormElement;
 f.addEventListener('submit', (e: Event) => {
 
   e.preventDefault();
-  if (validatePlate()&&validateModel()) {
+  var inputModel = (<HTMLInputElement>document.getElementById("carModel"));
+  var inputColor = (<HTMLInputElement>document.getElementById("carColor"));
+  if (validatePlate()&&validateEmpty(inputModel)&&validateEmpty(inputColor)) {
     createCar();
 
     showCar();
@@ -143,6 +145,7 @@ function validatePlate() {
     inputPlate.classList.add("is-invalid");
     return false;
   } else {
+    inputPlate.classList.remove("is-invalid");
     return true;
   }
 }
@@ -152,11 +155,16 @@ const formWheels = <HTMLFormElement>document.getElementById('form-wheels');
 function validateDiametre() {
   var acumError = 0;
   formWheels.classList.remove('is-invalid');
+  var modelInput;
   var diametreInput;
   var diametre;
   for (let i = 0; i < 4; i++) {
+    modelInput = (<HTMLInputElement>document.getElementById("rodaModel" + (i + 1)));
     diametreInput = (<HTMLInputElement>document.getElementById("rodaDiametre" + (i + 1)));
+
+    validateEmpty(modelInput);
     diametre = +diametreInput.value;
+    // Validació del diàmetre
     if (isNaN(diametre)) {
       acumError++;
       (<HTMLInputElement>document.getElementById("errorDiametre" + (i + 1))).textContent = "El diàmetre d'aquesta roda no és un nombre.";
@@ -166,25 +174,27 @@ function validateDiametre() {
       (<HTMLInputElement>document.getElementById("errorDiametre" + (i + 1))).textContent = "El diàmetre d'aquesta roda no està entre 0,4 i 2.";
       diametreInput.classList.add("is-invalid");
     }
+    else {
+      diametreInput.classList.remove("is-invalid");
+    }
   }
   if (acumError > 0) {
     return false;
   } else {
-    formWheels.classList.remove('is-invalid');
     return true;
   }
 
 }
 
-function validateModel() {
+
+function validateEmpty(inputText: HTMLInputElement) {
   formCar.classList.remove('is-invalid');
-  var inputModel = (<HTMLInputElement>document.getElementById("carModel"));
-  if(inputModel.value.length==0){
-    inputModel.classList.add("is-invalid");
+  
+  if(inputText.value.length==0){
+    inputText.classList.add("is-invalid");
     return false;
   }else{
-    formCar.classList.remove("is-invalid");
+    inputText.classList.remove("is-invalid");
     return true;
   }
 }
-
